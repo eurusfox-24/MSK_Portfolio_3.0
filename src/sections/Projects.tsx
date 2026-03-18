@@ -194,7 +194,7 @@ function ProjectCard({
   isVisible,
   onExpand,
 }: {
-  project: typeof projects[0];
+  project: typeof fallbackProjects[0];
   index: number;
   isVisible: boolean;
   onExpand: () => void;
@@ -259,7 +259,7 @@ function ProjectCard({
           </p>
 
           <div className="flex flex-wrap gap-1.5 pt-1">
-            {project.tags.map((tag) => (
+            {project.tags.map((tag: string) => (
               <span
                 key={tag}
                 className="px-2 py-0.5 text-xs font-mono text-white/40 bg-white/5 rounded border border-white/10"

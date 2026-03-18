@@ -51,7 +51,7 @@ const fallbackCertifications = [
 
 function getInitialCerts() {
   if (!import.meta.env.DEV && cmsSnapshot.certifications && cmsSnapshot.certifications.length > 0) {
-    return cmsSnapshot.certifications as typeof fallbackCertifications;
+    return cmsSnapshot.certifications as any;
   }
   return fallbackCertifications;
 }
@@ -152,7 +152,7 @@ export default function Certifications() {
 
         {/* Certifications Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {certifications.map((cert, index) => (
+          {certifications.map((cert: any, index: number) => (
             <div
               key={cert.id}
               data-index={index}
@@ -247,14 +247,14 @@ export default function Certifications() {
             </div>
             <div>
               <p className="font-heading text-2xl sm:text-3xl font-bold text-cyber-green mb-1">
-                {new Set(certifications.map(c => c.category)).size}
+                {new Set(certifications.map((c: any) => c.category)).size}
               </p>
               <p className="font-mono text-[10px] sm:text-xs text-white/40">Categories</p>
             </div>
             <div>
               <p className="font-heading text-2xl sm:text-3xl font-bold text-cyber-green mb-1">
                 {(() => {
-                  const years = certifications.map(c => parseInt(c.date)).filter(y => !isNaN(y));
+                  const years = certifications.map((c: any) => parseInt(c.date)).filter((y: number) => !isNaN(y));
                   if (years.length === 0) return 'N/A';
                   const min = Math.min(...years);
                   const max = Math.max(...years);

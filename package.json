@@ -6,11 +6,10 @@
   "scripts": {
     "dev": "vite",
     "fetch-cms": "node scripts/fetch-cms.js",
-    "build": "node scripts/fetch-cms.js && tsc -b && vite build",
+    "build": "node scripts/fetch-cms.js && tsc -b && vite build --outDir docs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist",
-    "publish": "node scripts/fetch-cms.js && tsc -b && vite build && gh-pages -d dist"
+    "publish": "node scripts/fetch-cms.js && tsc -b && vite build --outDir docs && git add . && git commit -m \"update site\" && git push"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
