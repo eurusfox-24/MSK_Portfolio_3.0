@@ -1,0 +1,86 @@
+{
+  "projects": [
+    {
+      "id": 2,
+      "title": "IoT Biometric Pulse & Oxygen Tracker",
+      "description": "Developed a biometric monitoring system using a Raspberry Pi and a Pulse Oximeter sensor to capture and analyze real-time heart rate and oxygen saturation (SpO₂) data.",
+      "image": null,
+      "tags": "Raspberry Pi, IoT, Python, Sensors",
+      "color": "from-emerald-500/20 to-teal-500/20"
+    },
+    {
+      "id": 4,
+      "title": "Adaptive Seismic Alert System",
+      "description": "Successfully pivoted from a sign-language translation glove to a functional earthquake detector in under 48 hours after hardware failure. Re-engineered motion sensors and hardware logic to meet presentation requirements.",
+      "image": null,
+      "tags": "Hardware, Arduino, C++, Rapid Prototyping",
+      "color": "from-blue-500/20 to-cyan-500/20"
+    },
+    {
+      "id": 6,
+      "title": "Projekti Honeypot",
+      "description": "Led a team of six to architect a multi-node honeynet using Cowrie, Suricata, and OpenWrt, conducting a full-scale Red Team/Blue Team simulation to analyze real-time intrusion detection and adversary behavior.",
+      "image": null,
+      "tags": "Cybersecurity, Honeypot, Suricata, Team Lead",
+      "color": "from-red-500/20 to-orange-500/20"
+    }
+  ],
+  "certifications": [
+    {
+      "id": 2,
+      "name": "Fortinet NSE3",
+      "issuer": "Fortinet",
+      "image": null,
+      "date": "2026",
+      "category": "Network Security",
+      "description": "Network Security Associate certification demonstrating expertise in Fortinet Firewall administration."
+    },
+    {
+      "id": 4,
+      "name": "AWS Cloud Practitioner Essentials",
+      "issuer": "Amazon Web Services",
+      "image": null,
+      "date": "2025",
+      "category": "Cloud Computing",
+      "description": "Foundational cloud computing knowledge and AWS services understanding."
+    },
+    {
+      "id": 6,
+      "name": "Cisco Introduction to Cybersecurity",
+      "issuer": "Cisco",
+      "image": null,
+      "date": "2025",
+      "category": "Cybersecurity",
+      "description": "Comprehensive introduction to cybersecurity concepts and best practices."
+    },
+    {
+      "id": 8,
+      "name": "Junction Hackathon 2025",
+      "issuer": "Junction",
+      "image": null,
+      "date": "2025",
+      "category": "Hackathon",
+      "description": "Participation in one of Europe's largest hackathon events."
+    },
+    {
+      "id": 10,
+      "name": "Google Prompting Essentials",
+      "issuer": "Google",
+      "image": null,
+      "date": "2026",
+      "category": "AI/ML",
+      "description": "Mastering effective prompt engineering for large language models."
+    },
+    {
+      "id": 12,
+      "name": "new cewrt",
+      "issuer": null,
+      "image": null,
+      "date": null,
+      "category": null,
+      "description": null
+    }
+  ],
+  "homelabs": [],
+  "fetchedAt": "2026-03-18T17:34:47.060Z"
+}

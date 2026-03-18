@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "homelabs",
+  "info": {
+    "singularName": "homelab",
+    "pluralName": "homelabs",
+    "displayName": "Homelab"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "default": "Active"
+    },
+    "onlineText": {
+      "type": "string",
+      "default": "Online"
+    },
+    "features": {
+      "type": "json"
+    },
+    "stats": {
+      "type": "json"
+    }
+  }
+}

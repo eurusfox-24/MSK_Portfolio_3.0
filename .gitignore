@@ -1,0 +1,29 @@
+# Frontend
+node_modules/
+dist/
+.vite/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CMS - exclude heavy auto-generated folders, keep source
+cms/node_modules/
+cms/dist/
+cms/.tmp/
+cms/.strapi/
+cms/types/
+cms/.env
