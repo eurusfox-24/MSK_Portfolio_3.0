@@ -25,6 +25,24 @@
         "images"
       ]
     },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "documentation": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
     "status": {
       "type": "string",
       "default": "Active"
@@ -38,6 +56,14 @@
     },
     "stats": {
       "type": "json"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "manualId": {
+      "type": "integer",
+      "unique": true
     }
   }
 }

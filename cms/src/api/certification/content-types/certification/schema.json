@@ -33,6 +33,10 @@
     },
     "description": {
       "type": "text"
+    },
+    "manualId": {
+      "type": "integer",
+      "unique": true
     }
   }
 }

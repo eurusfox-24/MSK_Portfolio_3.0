@@ -112,6 +112,12 @@ module.exports = {
           "0%": { width: "0%" },
           "100%": { width: "100%" },
         },
+        "scan": {
+          "0%": { top: "0%", opacity: "0" },
+          "5%": { opacity: "1" },
+          "95%": { opacity: "1" },
+          "100%": { top: "100%", opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

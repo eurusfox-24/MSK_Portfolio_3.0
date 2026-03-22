@@ -1,0 +1,39 @@
+{
+  "kind": "singleType",
+  "collectionName": "current_focuses",
+  "info": {
+    "singularName": "current-focus",
+    "pluralName": "current-focuses",
+    "displayName": "Current Focus",
+    "description": "Information about the current research or project focus"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "tags": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "defenseStrategy": {
+      "type": "text"
+    },
+    "aiIntegration": {
+      "type": "text"
+    }
+  }
+}

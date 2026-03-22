@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="4" fill="#000000" />
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#00ff41" font-family="monospace" font-weight="bold" font-size="20">M</text>
+  <text x="5%" y="20%" fill="#00ff41" font-family="monospace" font-size="6" opacity="0.6">10</text>
+  <text x="75%" y="85%" fill="#00ff41" font-family="monospace" font-size="6" opacity="0.6">01</text>
+</svg>

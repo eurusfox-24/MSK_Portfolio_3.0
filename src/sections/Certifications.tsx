@@ -1,66 +1,68 @@
 import { useEffect, useRef, useState } from 'react';
 import cmsSnapshot from '../data/cms-data.json';
 
-const fallbackCertifications = [
-  {
-    id: 1,
-    name: 'Fortinet NSE3',
-    issuer: 'Fortinet',
-    image: 'certs/Fortinet_NSE3.jpeg',
-    date: '2026',
-    category: 'Network Security',
-    description: 'Network Security Associate certification demonstrating expertise in Fortinet Firewall administration.',
-  },
-  {
-    id: 2,
-    name: 'AWS Cloud Practitioner Essentials',
-    issuer: 'Amazon Web Services',
-    image: 'certs/aws_cert.jpeg',
-    date: '2025',
-    category: 'Cloud Computing',
-    description: 'Foundational cloud computing knowledge and AWS services understanding.',
-  },
-  {
-    id: 3,
-    name: 'Cisco Introduction to Cybersecurity',
-    issuer: 'Cisco',
-    image: 'certs/Cisco_CysaIntro.jpeg',
-    date: '2025',
-    category: 'Cybersecurity',
-    description: 'Comprehensive introduction to cybersecurity concepts and best practices.',
-  },
-  {
-    id: 4,
-    name: 'Junction Hackathon 2025',
-    issuer: 'Junction',
-    image: 'certs/junctionHackathonCertificate.jpeg',
-    date: '2025',
-    category: 'Hackathon',
-    description: 'Participation in one of Europe\'s largest hackathon events.',
-  },
-  {
-    id: 5,
-    name: 'Google Prompting Essentials',
-    issuer: 'Google',
-    image: 'certs/googleprompting.jpeg',
-    date: '2026',
-    category: 'AI/ML',
-    description: 'Mastering effective prompt engineering for large language models.',
-  },
-];
+interface Certification {
+  id: number | string;
+  name: string;
+  issuer: string;
+  image?: string;
+  date: string;
+  category: string;
+  description: string;
+}
 
-function getInitialCerts() {
-  if (!import.meta.env.DEV && cmsSnapshot.certifications && cmsSnapshot.certifications.length > 0) {
-    return cmsSnapshot.certifications as any;
+interface CmsSnapshot {
+  certifications: Certification[];
+}
+
+interface StrapiCertAttrs {
+  name: string;
+  issuer: string;
+  image?: {
+    data?: {
+      attributes?: {
+        url: string;
+      };
+    };
+    url?: string;
+  };
+  date: string;
+  category: string;
+  description: string;
+}
+
+interface StrapiCertItem {
+  id: string | number;
+  attributes?: StrapiCertAttrs;
+  documentId?: string;
+}
+
+function getInitialCerts(): Certification[] {
+  const snapshot = (cmsSnapshot as unknown as CmsSnapshot).certifications;
+  if (snapshot && snapshot.length > 0) {
+    return snapshot;
   }
-  return fallbackCertifications;
+  return [];
+}
+
+function getCertImage(cert: Certification) {
+  if (cert.image) return cert.image;
+  
+  const name = cert.name.toLowerCase();
+  if (name.includes('fortinet')) return 'certs/Fortinet_NSE3.jpeg';
+  if (name.includes('aws')) return 'certs/aws_cert.jpeg';
+  if (name.includes('cisco')) return 'certs/Cisco_CysaIntro.jpeg';
+  if (name.includes('junction')) return 'certs/junctionHackathonCertificate.jpeg';
+  if (name.includes('google')) return 'certs/googleprompting.jpeg';
+  
+  return 'https://placehold.co/400x300/111/00ff41?text=Credential';
 }
 
 export default function Certifications() {
-  const [certifications, setCertifications] = useState(getInitialCerts());
+  const [certifications, setCertifications] = useState<Certification[]>(getInitialCerts());
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [selectedCert, setSelectedCert] = useState<typeof fallbackCertifications[0] | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | string | null>(null);
+  const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -69,16 +71,18 @@ export default function Certifications() {
       .then((res) => res.json())
       .then((data) => {
         if (data && data.data && data.data.length > 0) {
-          const cmsCerts = data.data.map((item: any) => {
-            const attrs = item.attributes || item;
-            let imageUrl = attrs.image;
+          const cmsCerts = data.data.map((item: StrapiCertItem) => {
+            const attrs = item.attributes || (item as unknown as StrapiCertAttrs);
+            let imageUrl: string | undefined;
+            
             if (attrs.image?.data?.attributes?.url) {
               imageUrl = `http://localhost:1337${attrs.image.data.attributes.url}`;
             } else if (attrs.image?.url) {
               imageUrl = `http://localhost:1337${attrs.image.url}`;
             }
+            
             return {
-              id: item.id || attrs.documentId,
+              id: item.id || item.documentId || Math.random().toString(),
               name: attrs.name,
               issuer: attrs.issuer,
               image: imageUrl,
@@ -152,7 +156,7 @@ export default function Certifications() {
 
         {/* Certifications Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {certifications.map((cert: any, index: number) => (
+          {certifications.map((cert: Certification, index: number) => (
             <div
               key={cert.id}
               data-index={index}
@@ -181,7 +185,7 @@ export default function Certifications() {
                 >
                   <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 pt-12 sm:pt-14">
                     <img
-                      src={cert.image}
+                      src={getCertImage(cert)}
                       alt={cert.name}
                       className={`max-w-full max-h-full object-contain transition-all duration-500 ${
                         hoveredCard === cert.id ? 'scale-110' : 'scale-100'
@@ -247,14 +251,14 @@ export default function Certifications() {
             </div>
             <div>
               <p className="font-heading text-2xl sm:text-3xl font-bold text-cyber-green mb-1">
-                {new Set(certifications.map((c: any) => c.category)).size}
+                {new Set(certifications.map((c: Certification) => c.category)).size}
               </p>
               <p className="font-mono text-[10px] sm:text-xs text-white/40">Categories</p>
             </div>
             <div>
               <p className="font-heading text-2xl sm:text-3xl font-bold text-cyber-green mb-1">
                 {(() => {
-                  const years = certifications.map((c: any) => parseInt(c.date)).filter((y: number) => !isNaN(y));
+                  const years = certifications.map((c: Certification) => parseInt(c.date)).filter((y: number) => !isNaN(y));
                   if (years.length === 0) return 'N/A';
                   const min = Math.min(...years);
                   const max = Math.max(...years);
@@ -288,7 +292,7 @@ export default function Certifications() {
             {/* Image */}
             <div className="flex-1 flex items-center justify-center p-4 sm:p-8 overflow-auto bg-gradient-to-br from-cyber-black to-cyber-dark">
               <img
-                src={selectedCert.image}
+                src={getCertImage(selectedCert)}
                 alt={selectedCert.name}
                 className="max-w-full max-h-full object-contain"
               />
@@ -306,3 +310,4 @@ export default function Certifications() {
     </section>
   );
 }
+

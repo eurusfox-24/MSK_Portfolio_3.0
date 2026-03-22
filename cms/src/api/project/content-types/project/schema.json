@@ -25,11 +25,40 @@
         "images"
       ]
     },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "documentation": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
     "tags": {
       "type": "string"
     },
     "color": {
       "type": "string"
+    },
+    "githubUrl": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "manualId": {
+      "type": "integer",
+      "unique": true
     }
   }
 }

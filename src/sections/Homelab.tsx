@@ -1,242 +1,171 @@
 import { useEffect, useRef, useState } from 'react';
+import { Maximize2 } from 'lucide-react';
 import cmsSnapshot from '../data/cms-data.json';
+import ProjectModal from '../components/ProjectModal';
 
-const fallbackFeatures = [
-  { title: 'Real-time Monitoring', description: 'Live attack surface visualization' },
-  { title: 'Global Honeypot', description: 'Multi-node deployment worldwide' },
-  { title: 'Security Analysis', description: 'Deep packet inspection' },
-  { title: 'Log Management', description: 'Centralized Elasticsearch logging' },
-];
+interface HomelabStat {
+  label: string;
+  value: string;
+}
 
-const fallbackStats = [
-  { label: 'Containers', value: '20+' },
-  { label: 'Attack Types', value: '50+' },
-  { label: 'Uptime', value: '99.9%' },
-  { label: 'Logs/Day', value: '10K+' },
-];
+interface HomelabFeature {
+  title: string;
+  description: string;
+}
 
-const defaultHomelabData = {
-  title: 'Live Attack Surface Monitoring with T-Pot',
-  description: 'Deployed a containerized T-Pot honeypot environment to monitor real-world cyberattacks, utilizing the Elastic Stack for log analysis while mastering network security via firewall configuration and Docker orchestration.',
-  image: 'images/Tpot.jpeg',
-  status: 'Active',
-  onlineText: 'Online',
-  features: fallbackFeatures,
-  stats: fallbackStats
-};
+interface HomelabItem {
+  title: string;
+  description: string;
+  image: string;
+  gallery: string[];
+  documentation: string | null;
+  status: string;
+  onlineText: string;
+  features: HomelabFeature[];
+  stats: HomelabStat[];
+  tags: string[];
+}
 
-function getInitialHomelab() {
-  if (!import.meta.env.DEV && cmsSnapshot.homelabs && cmsSnapshot.homelabs.length > 0) {
-    const h = cmsSnapshot.homelabs[0] as any;
-    return {
-      title: h.title || defaultHomelabData.title,
-      description: h.description || defaultHomelabData.description,
-      image: h.image || defaultHomelabData.image,
-      status: h.status || defaultHomelabData.status,
-      onlineText: h.onlineText || defaultHomelabData.onlineText,
-      features: h.features || fallbackFeatures,
-      stats: h.stats || fallbackStats,
-    };
+interface CmsSnapshot {
+  homelabs: HomelabItem[];
+}
+
+function getInitialHomelab(): HomelabItem[] {
+  const snapshot = (cmsSnapshot as unknown as CmsSnapshot).homelabs;
+  if (snapshot && snapshot.length > 0) {
+    return snapshot.map(lab => ({
+      ...lab,
+      tags: lab.tags || ['Cybersecurity', 'Docker', 'Elastic Stack', 'T-Pot']
+    }));
   }
-  return defaultHomelabData;
+  return [
+    {
+      title: "Live Attack Surface Monitoring with T-Pot",
+      description: "Deployed a containerized T-Pot honeypot environment to monitor real-world cyberattacks, utilizing the Elastic Stack for log analysis while mastering network security via firewall configuration and Docker orchestration.",
+      image: "images/Tpot.jpeg",
+      gallery: [],
+      documentation: null,
+      status: "published",
+      onlineText: "Online",
+      features: [
+        { title: "Real-time Monitoring", description: "Live attack surface visualization" },
+        { title: "Global Honeypot", description: "Multi-node deployment worldwide" },
+        { title: "Security Analysis", description: "Deep packet inspection" },
+        { title: "Log Management", description: "Centralized Elasticsearch logging" }
+      ],
+      stats: [
+        { label: "Containers", value: "20+" },
+        { label: "Attack Types", value: "50+" },
+        { label: "Uptime", value: "99.9%" },
+        { label: "Logs/Day", value: "10K+" }
+      ],
+      tags: ['Cybersecurity', 'Docker', 'Elastic Stack', 'T-Pot']
+    }
+  ];
 }
 
 export default function Homelab() {
-  const [homelabData, setHomelabData] = useState(getInitialHomelab());
-  const [isVisible, setIsVisible] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [homelabs] = useState<HomelabItem[]>(getInitialHomelab());
+  const [visibleItems, setVisibleItems] = useState<number[]>([]);
+  const [selectedProject, setSelectedProject] = useState<HomelabItem | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!import.meta.env.DEV) return;
-    fetch('http://localhost:1337/api/homelabs?populate=*')
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.data && data.data.length > 0) {
-          const item = data.data[0];
-          const attrs = item.attributes || item;
-          let imageUrl = attrs.image;
-          if (attrs.image?.data?.attributes?.url) {
-            imageUrl = `http://localhost:1337${attrs.image.data.attributes.url}`;
-          } else if (attrs.image?.url) {
-            imageUrl = `http://localhost:1337${attrs.image.url}`;
-          }
-
-          setHomelabData({
-            title: attrs.title || homelabData.title,
-            description: attrs.description || homelabData.description,
-            image: imageUrl || homelabData.image,
-            status: attrs.status || homelabData.status,
-            onlineText: attrs.onlineText || homelabData.onlineText,
-            features: attrs.features || fallbackFeatures,
-            stats: attrs.stats || fallbackStats
-          });
-        }
-      })
-      .catch(err => console.log('Homelab fallback used', err));
-  }, []);
-
-  useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const indexStr = entry.target.getAttribute('data-index');
+            if (indexStr) {
+              const index = parseInt(indexStr);
+              setVisibleItems(prev => [...new Set([...prev, index])]);
+            }
+          }
+        });
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    sectionRef.current?.querySelectorAll('.homelab-item').forEach(el => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [homelabs]);
+
+  if (homelabs.length === 0) return null;
 
   return (
-    <section
-      id="homelab"
-      ref={sectionRef}
-      className="relative py-16 lg:py-24 overflow-hidden"
-    >
-      {/* Section Divider */}
+    <section id="homelab" ref={sectionRef} className="relative py-20 lg:py-32 overflow-hidden bg-cyber-black min-h-screen pt-32">
       <div className="absolute top-0 left-0 right-0 section-divider" />
-
+      
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Section Header */}
-        <div className="mb-10 lg:mb-14">
+        <div className="mb-16">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-px bg-cyber-green/50" />
-            <span className="font-mono text-xs text-cyber-green/60 tracking-widest">
-              INFRASTRUCTURE
-            </span>
+            <span className="font-mono text-xs text-cyber-green/60 tracking-widest uppercase">Research Environments</span>
           </div>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            Homelab
-          </h2>
-          <p className="mt-3 text-white/50 max-w-2xl text-sm sm:text-base">
-            A containerized cybersecurity environment for monitoring real-world attacks, 
-            analyzing threat patterns, and mastering network security.
-          </p>
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold text-white tracking-tight">Homelab & Infrastructure</h2>
         </div>
 
-        {/* Main Homelab Card */}
-        <div 
-          className={`relative transition-all duration-1000 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-          }`}
-        >
-          {/* Card Container */}
-          <div 
-            className={`relative overflow-hidden rounded-xl border border-white/10 bg-cyber-dark transition-all duration-500 cursor-pointer ${
-              isExpanded ? 'border-cyber-green/30' : 'hover:border-white/20'
-            }`}
-            onClick={() => setIsExpanded(!isExpanded)}
-          >
-            {/* Header Bar */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/5">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-sm text-white/80">{homelabData.title.split('with')[1]?.trim() || 'T-Pot Honeypot'}</span>
-                <span className="px-2 py-0.5 text-xs font-mono text-cyber-green bg-cyber-green/10 rounded">
-                  {homelabData.status}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 bg-cyber-green rounded-full status-pulse" />
-                <span className="font-mono text-xs text-white/40">{homelabData.onlineText}</span>
-              </div>
-            </div>
-
-            {/* Main Content */}
-            <div className={`relative transition-all duration-700 ${
-              isExpanded ? 'h-[400px] sm:h-[450px]' : 'h-[220px] sm:h-[260px]'
-            }`}>
-              {/* Background Image */}
-              <div className="absolute inset-0">
-                <img
-                  src={homelabData.image}
-                  alt={homelabData.title}
-                  className={`w-full h-full object-cover transition-all duration-700 ${
-                    isExpanded ? 'scale-105 opacity-100' : 'scale-100 opacity-60'
-                  }`}
-                />
-                <div className={`absolute inset-0 bg-gradient-to-t from-cyber-dark via-cyber-dark/80 to-transparent transition-opacity duration-500 ${
-                  isExpanded ? 'opacity-80' : 'opacity-90'
-                }`} />
-              </div>
-
-              {/* Content Overlay */}
-              <div className="absolute inset-0 p-4 sm:p-6 flex flex-col justify-end">
-                <div className={`transition-all duration-500 ${
-                  isExpanded ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
-                }`}>
-                  <h3 className="font-heading text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-3">
-                    {homelabData.title}
-                  </h3>
-                  <p className="text-white/60 text-sm max-w-2xl mb-4">
-                    {homelabData.description}
-                  </p>
+        <div className="space-y-32">
+          {homelabs.map((lab, index) => (
+            <div 
+              key={index} 
+              data-index={index}
+              className={`homelab-item grid lg:grid-cols-12 gap-12 items-center transition-all duration-1000 ${
+                visibleItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+              }`}
+            >
+              <div className={`lg:col-span-6 space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <div className="space-y-4">
+                  <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight">{lab.title}</h3>
+                  <p className="text-white/60 text-lg leading-relaxed max-w-xl">{lab.description}</p>
                 </div>
-
-                {/* Features Grid */}
-                <div className={`grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 transition-all duration-500 ${
-                  isExpanded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}>
-                  {homelabData.features.map((feature: any, index: number) => (
-                    <div
-                      key={feature.title}
-                      className="p-2.5 sm:p-3 bg-cyber-black/70 backdrop-blur-sm rounded-lg border border-white/10"
-                      style={{ transitionDelay: `${index * 0.1}s` }}
-                    >
-                      <h4 className="font-mono text-xs text-white/80 mb-0.5">{feature.title}</h4>
-                      <p className="text-xs text-white/40">{feature.description}</p>
+                
+                <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                  {lab.stats.map((stat) => (
+                    <div key={stat.label} className="bg-white/5 border border-white/10 rounded-2xl p-4 hover:border-cyber-green/30 transition-all duration-500 group">
+                      <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-1">{stat.label}</p>
+                      <p className="text-2xl font-bold text-white group-hover:text-cyber-green transition-colors">{stat.value}</p>
                     </div>
                   ))}
                 </div>
 
-                {/* Collapsed View Content */}
-                <div className={`absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 transition-all duration-500 ${
-                  isExpanded ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
-                }`}>
-                  <h3 className="font-heading text-base sm:text-xl font-bold text-white mb-1">
-                    {homelabData.title}
-                  </h3>
-                  <p className="text-white/50 text-xs sm:text-sm max-w-xl">
-                    Click to explore the honeypot infrastructure...
-                  </p>
+                <div className="flex flex-wrap gap-2">
+                  {lab.tags?.map((tag) => (
+                    <span key={tag} className="px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-cyber-green bg-cyber-green/5 border border-cyber-green/20 rounded-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className={`lg:col-span-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <div className="relative group aspect-video rounded-3xl overflow-hidden border border-white/10 bg-cyber-dark/80 shadow-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/80 via-transparent to-transparent z-10" />
+                  <img 
+                    src={lab.image || "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2000"} 
+                    alt={lab.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                  />
+                  <div className="absolute top-4 left-4 z-20">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-cyber-green/30">
+                      <div className="w-1.5 h-1.5 rounded-full bg-cyber-green animate-pulse" />
+                      <span className="font-mono text-[10px] text-cyber-green uppercase tracking-widest font-bold">{lab.onlineText}</span>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+                    <button 
+                      onClick={() => setSelectedProject(lab)} 
+                      className="p-4 bg-cyber-green text-black rounded-full transform scale-90 group-hover:scale-100 transition-transform duration-500 shadow-[0_0_30px_rgba(0,255,65,0.4)]"
+                    >
+                      <Maximize2 className="w-6 h-6" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-
-            {/* Expand Indicator */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5">
-              <span className="font-mono text-[10px] text-white/30">
-                {isExpanded ? 'Tap to collapse' : 'Tap to expand'}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Row */}
-        <div className={`grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 transition-all duration-1000 delay-300 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-        }`}>
-          {homelabData.stats.map((stat: any) => (
-            <StatBox key={stat.label} label={stat.label} value={stat.value} />
           ))}
         </div>
       </div>
+      {selectedProject && <ProjectModal isOpen={!!selectedProject} project={selectedProject} onClose={() => setSelectedProject(null)} />}
     </section>
   );
 }
-
-// Stat Box Component
-function StatBox({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="p-3 sm:p-4 bg-cyber-dark/50 rounded-lg border border-white/5">
-      <p className="font-mono text-[10px] sm:text-xs text-white/40 mb-0.5">{label}</p>
-      <p className="font-heading text-lg sm:text-xl font-bold text-cyber-green">{value}</p>
-    </div>
-  );
-}
-

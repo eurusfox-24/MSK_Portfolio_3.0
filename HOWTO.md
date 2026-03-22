@@ -24,8 +24,10 @@ npm run publish
 
 That's it. One command:
 - Pulls latest CMS data
-- Builds the site
-- Pushes to GitHub Pages
+- Builds the site into the `docs/` folder
+- Commits and pushes your changes to the `main` branch
+
+> ⚠️ **One-time GitHub Setup**: Go to your repository **Settings → Pages**. Under **Build and deployment**, set **Source** to "Deploy from a branch". Set the **Branch** to `main` and the folder to `/docs`. Click **Save**.
 
 > CMS must be running when you publish.
 
@@ -35,11 +37,13 @@ That's it. One command:
 
 ### Project
 ```
-title        →  My New Project
-description  →  What it does
-image        →  Upload via Media Library
-tags         →  React, Python, AWS  (comma-separated)
-color        →  from-purple-500/20 to-pink-500/20
+title         →  My New Project
+description   →  What it does
+image         →  Main card preview image
+gallery       →  Upload multiple detailed images
+documentation →  Upload PDF or documentation file
+tags          →  React, Python, AWS  (comma-separated)
+color         →  from-purple-500/20 to-pink-500/20
 ```
 
 ### Certification
@@ -54,13 +58,15 @@ description  →  Brief description
 
 ### Homelab
 ```
-title        →  Live Attack Surface Monitoring
-description  →  What your homelab does
-image        →  Upload a screenshot
-status       →  Active
-onlineText   →  Online
-features     →  JSON (see below)
-stats        →  JSON (see below)
+title         →  Live Attack Surface Monitoring
+description   →  What your homelab does
+image         →  Main background image
+gallery       →  Upload multiple infrastructure screenshots
+documentation →  Upload Network Map or Docs
+status        →  Active
+onlineText    →  Online
+features      →  JSON (see below)
+stats         →  JSON (see below)
 ```
 
 Features JSON:

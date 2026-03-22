@@ -1,0 +1,52 @@
+{
+  "kind": "singleType",
+  "collectionName": "profiles",
+  "info": {
+    "singularName": "profile",
+    "pluralName": "profiles",
+    "displayName": "Profile",
+    "description": "Global user profile and social links"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "role": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "githubUrl": {
+      "type": "string"
+    },
+    "linkedinUrl": {
+      "type": "string"
+    },
+    "tryHackMeId": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "cv": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "location": {
+      "type": "string"
+    },
+    "sectionOrder": {
+      "type": "string",
+      "default": "experience,projects,homelab"
+    }
+  }
+}
