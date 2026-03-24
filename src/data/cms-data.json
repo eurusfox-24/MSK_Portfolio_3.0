@@ -4,38 +4,35 @@
       "id": 15,
       "title": "Adaptive Seismic Alert System",
       "description": "Successfully pivoted from a sign-language translation glove to a functional earthquake detector in under 48 hours after hardware failure. Re-engineered motion sensors and hardware logic to meet presentation requirements.",
-      "image": "http://localhost:1337/uploads/earthquake_Detector_5a71f0d5f1.jpeg",
+      "image": "uploads/earthquake_Detector_5a71f0d5f1.jpeg",
       "gallery": [],
       "documentation": null,
       "tags": "Hardware, Arduino, C++, Rapid Prototyping",
-      "color": "from-blue-500/20 to-cyan-500/20",
-      "order": 0
+      "color": "from-blue-500/20 to-cyan-500/20"
     },
     {
       "id": 20,
       "title": "IoT Biometric Pulse & Oxygen Tracker",
       "description": "Developed a biometric monitoring system using a Raspberry Pi and a Pulse Oximeter sensor to capture and analyze real-time heart rate and oxygen saturation (SpO₂) data.",
-      "image": "http://localhost:1337/uploads/Biometric_Sensor_Proj_2e0591b32e.jpeg",
+      "image": "uploads/Biometric_Sensor_Proj_2e0591b32e.jpeg",
       "gallery": [],
       "documentation": null,
       "tags": "Raspberry Pi, IoT, Python, Sensors",
-      "color": "from-emerald-500/20 to-teal-500/20",
-      "order": 0
+      "color": "from-emerald-500/20 to-teal-500/20"
     },
     {
       "id": 21,
       "title": "Projekti Honeypot",
       "description": "Led a team of six to architect a multi-node honeynet using Cowrie, Suricata, and OpenWrt, conducting a full-scale Red Team/Blue Team simulation to analyze real-time intrusion detection and adversary behavior.",
-      "image": "http://localhost:1337/uploads/honey_Pot_0be936ce84.jpeg",
+      "image": "uploads/honey_Pot_0be936ce84.jpeg",
       "gallery": [
-        "http://localhost:1337/uploads/grp_pic_honeypot_c95198976d.jpeg",
-        "http://localhost:1337/uploads/cowrie_pic_8541c4cf4f.jpeg",
-        "http://localhost:1337/uploads/parrot_os_pic_cc3c6f0bad.jpeg"
+        "uploads/grp_pic_honeypot_c95198976d.jpeg",
+        "uploads/cowrie_pic_8541c4cf4f.jpeg",
+        "uploads/parrot_os_pic_cc3c6f0bad.jpeg"
       ],
-      "documentation": "http://localhost:1337/uploads/Honey_Pot_Final_Technical_Report_e3bb754ae1.pdf",
+      "documentation": "uploads/Honey_Pot_Final_Technical_Report_e3bb754ae1.pdf",
       "tags": "Cybersecurity, Honeypot, Suricata, Team Lead",
-      "color": "from-red-500/20 to-orange-500/20",
-      "order": 0
+      "color": "from-red-500/20 to-orange-500/20"
     }
   ],
   "certifications": [
@@ -43,7 +40,7 @@
       "id": 13,
       "name": "Fortinet NSE3",
       "issuer": "Fortinet",
-      "image": "http://localhost:1337/uploads/unamed_7b937dc361.bin",
+      "image": "uploads/unamed_7b937dc361.bin",
       "date": "2026",
       "category": "Network Security",
       "description": "Network Security Associate certification demonstrating expertise in Fortinet Firewall administration."
@@ -52,7 +49,7 @@
       "id": 14,
       "name": "AWS Cloud Practitioner Essentials",
       "issuer": "Amazon Web Services",
-      "image": "http://localhost:1337/uploads/unamed_817a7d8fa0.bin",
+      "image": "uploads/unamed_817a7d8fa0.bin",
       "date": "2025",
       "category": "Cloud Computing",
       "description": "Foundational cloud computing knowledge and AWS services understanding."
@@ -61,7 +58,7 @@
       "id": 15,
       "name": "Cisco Introduction to Cybersecurity",
       "issuer": "Cisco",
-      "image": "http://localhost:1337/uploads/unamed_4d8f58b086.bin",
+      "image": "uploads/unamed_4d8f58b086.bin",
       "date": "2025",
       "category": "Cybersecurity",
       "description": "Comprehensive introduction to cybersecurity concepts and best practices."
@@ -70,7 +67,7 @@
       "id": 16,
       "name": "Junction Hackathon 2025",
       "issuer": "Junction",
-      "image": "http://localhost:1337/uploads/unamed_45bad699c1.bin",
+      "image": "uploads/unamed_45bad699c1.bin",
       "date": "2025",
       "category": "Hackathon",
       "description": "Participation in one of Europe's largest hackathon events."
@@ -79,7 +76,7 @@
       "id": 17,
       "name": "Google Prompting Essentials",
       "issuer": "Google",
-      "image": "http://localhost:1337/uploads/unamed_b8d58e67b1.bin",
+      "image": "uploads/unamed_b8d58e67b1.bin",
       "date": "2026",
       "category": "AI/ML",
       "description": "Mastering effective prompt engineering for large language models."
@@ -90,7 +87,7 @@
       "id": 3,
       "title": "Live Attack Surface Monitoring with T-Pot",
       "description": "Deployed a containerized T-Pot honeypot environment to monitor real-world cyberattacks, utilizing the Elastic Stack for log analysis while mastering network security via firewall configuration and Docker orchestration.",
-      "image": "http://localhost:1337/uploads/Tpot_fd9a57bc34.jpg",
+      "image": "uploads/Tpot_fd9a57bc34.jpg",
       "gallery": [],
       "documentation": null,
       "status": "published",
@@ -130,8 +127,7 @@
           "label": "Logs/Day",
           "value": "10K+"
         }
-      ],
-      "order": 0
+      ]
     }
   ],
   "experiences": [
@@ -184,6 +180,26 @@
       "logo": null,
       "dateRange": "2019 - 2022",
       "tags": ""
+    },
+    {
+      "id": 80,
+      "title": "Cybersecurity Analyst (Intern)",
+      "company": "Tech Defense Solutions",
+      "location": "Remote",
+      "description": "Assisting in vulnerability assessments and network monitoring. Implementing security protocols for cloud-based infrastructure.",
+      "logo": null,
+      "dateRange": "Jan 2024 - Present",
+      "tags": "SIEM, Vulnerability Assessment, Network Security"
+    },
+    {
+      "id": 82,
+      "title": "IT Support Specialist",
+      "company": "Global Systems Inc.",
+      "location": "Helsinki, Finland",
+      "description": "Provided technical support for hardware and software issues. Managed user accounts and network permissions across the organization.",
+      "logo": null,
+      "dateRange": "May 2022 - Dec 2023",
+      "tags": "Technical Support, Troubleshooting, Active Directory"
     }
   ],
   "events": [
@@ -193,9 +209,8 @@
       "description": "Networking and exploring AI innovations at Helsinki XR Center.",
       "date": "11 Mar 2026",
       "location": "Helsinki XR Center",
-      "image": "http://localhost:1337/uploads/xr_center_48af4e5b86.jpeg",
-      "gallery": [],
-      "order": 0
+      "image": "uploads/xr_center_48af4e5b86.jpeg",
+      "gallery": []
     },
     {
       "id": 15,
@@ -203,9 +218,8 @@
       "description": "Europe's largest hackathon. Worked on Valio Aimo's Ai challenge.",
       "date": "14 - 16 Nov 2025",
       "location": "Espoo",
-      "image": "http://localhost:1337/uploads/Whats_App_Image_2026_03_22_at_19_38_49_3958268a4c.jpeg",
-      "gallery": [],
-      "order": 0
+      "image": "uploads/Whats_App_Image_2026_03_22_at_19_38_49_3958268a4c.jpeg",
+      "gallery": []
     },
     {
       "id": 16,
@@ -213,9 +227,8 @@
       "description": "Monthly meetup for the Helsinki information security community.",
       "date": "12 Mar 2026",
       "location": "Helsinki",
-      "image": "http://localhost:1337/uploads/helsec_f096accaca.jpeg",
-      "gallery": [],
-      "order": 0
+      "image": "uploads/helsec_f096accaca.jpeg",
+      "gallery": []
     },
     {
       "id": 17,
@@ -223,27 +236,20 @@
       "description": "Local security community meetup in Kuopio.",
       "date": "2025",
       "location": "Kuopio",
-      "image": "http://localhost:1337/uploads/Screenshot_22_3_2026_195219_localhost_996da2e820.jpeg",
-      "gallery": [],
-      "order": 0
+      "image": "uploads/Screenshot_22_3_2026_195219_localhost_996da2e820.jpeg",
+      "gallery": []
     }
   ],
   "memberships": [
     {
       "id": 2,
       "title": "KuoSec",
-      "description": "Active member of the Kuopio Information Security community.",
-      "image": null,
-      "gallery": [],
-      "order": 0
+      "description": "Active member of the Kuopio Information Security community."
     },
     {
       "id": 4,
       "title": "Tietoala ry",
-      "description": "Association of IT sector Employees.",
-      "image": null,
-      "gallery": [],
-      "order": 0
+      "description": "Association of IT sector Employees."
     }
   ],
   "currentFocus": {
@@ -263,9 +269,9 @@
     "linkedinUrl": "www.linkedin.com/in/min-set-ko-4342121b6",
     "tryHackMeId": "884096",
     "email": "minnsetko@gmail.com",
-    "cvUrl": "http://localhost:1337/uploads/unamed_867940c888.bin",
+    "cvUrl": "uploads/unamed_867940c888.bin",
     "location": "Kuopio, Finland",
     "sectionOrder": null
   },
-  "fetchedAt": "2026-03-22T18:06:55.976Z"
+  "fetchedAt": "2026-03-24T18:10:43.373Z"
 }
