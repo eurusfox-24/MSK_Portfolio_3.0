@@ -148,22 +148,6 @@ export default {
     
     if (!hasTechDefense) {
       const experiences = [
-        {
-          title: 'Cybersecurity Analyst (Intern)',
-          company: 'Tech Defense Solutions',
-          location: 'Remote',
-          dateRange: 'Jan 2024 - Present',
-          description: 'Assisting in vulnerability assessments and network monitoring. Implementing security protocols for cloud-based infrastructure.',
-          tags: 'SIEM, Vulnerability Assessment, Network Security',
-        },
-        {
-          title: 'IT Support Specialist',
-          company: 'Global Systems Inc.',
-          location: 'Helsinki, Finland',
-          dateRange: 'May 2022 - Dec 2023',
-          description: 'Provided technical support for hardware and software issues. Managed user accounts and network permissions across the organization.',
-          tags: 'Technical Support, Troubleshooting, Active Directory',
-        },
       ];
       for (const exp of experiences) {
         await strapi.documents(experienceUID).create({

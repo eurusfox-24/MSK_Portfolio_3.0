@@ -180,26 +180,6 @@
       "logo": null,
       "dateRange": "2019 - 2022",
       "tags": ""
-    },
-    {
-      "id": 80,
-      "title": "Cybersecurity Analyst (Intern)",
-      "company": "Tech Defense Solutions",
-      "location": "Remote",
-      "description": "Assisting in vulnerability assessments and network monitoring. Implementing security protocols for cloud-based infrastructure.",
-      "logo": null,
-      "dateRange": "Jan 2024 - Present",
-      "tags": "SIEM, Vulnerability Assessment, Network Security"
-    },
-    {
-      "id": 82,
-      "title": "IT Support Specialist",
-      "company": "Global Systems Inc.",
-      "location": "Helsinki, Finland",
-      "description": "Provided technical support for hardware and software issues. Managed user accounts and network permissions across the organization.",
-      "logo": null,
-      "dateRange": "May 2022 - Dec 2023",
-      "tags": "Technical Support, Troubleshooting, Active Directory"
     }
   ],
   "events": [
