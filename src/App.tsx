@@ -9,7 +9,6 @@ import Homelab from './sections/Homelab';
 import Experience from './sections/Experience';
 import Archive from './sections/Archive';
 import Footer from './sections/Footer';
-import PrifinaChat from './components/PrifinaChat';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -49,7 +48,6 @@ function App() {
         </main>
 
         <Footer />
-        <PrifinaChat />
       </div>
     </Router>
   );
