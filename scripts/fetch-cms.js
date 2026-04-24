@@ -56,6 +56,23 @@ async function downloadImage(url) {
 async function fetchCmsData() {
   console.log("🚀 Fetching data from Strapi CMS & downloading images...\n");
 
+  // ═══════════════════════════════════════════════════════════════
+  // SAFETY CHECK: Verify CMS is running before doing anything
+  // ═══════════════════════════════════════════════════════════════
+  try {
+    const healthCheck = await fetch(`${STRAPI_URL}/api/projects`, { signal: AbortSignal.timeout(3000) });
+    if (!healthCheck.ok) throw new Error(`CMS returned status ${healthCheck.status}`);
+    console.log("  ✅ CMS is online — proceeding with data fetch\n");
+  } catch (err) {
+    console.log("  ╔════════════════════════════════════════════════════════╗");
+    console.log("  ║  ⛔ CMS IS NOT RUNNING — ABORTING TO PROTECT DATA    ║");
+    console.log("  ║                                                       ║");
+    console.log("  ║  Your existing cms-data.json was NOT overwritten.     ║");
+    console.log("  ║  Start the CMS first:  cd cms && npm run dev          ║");
+    console.log("  ╚════════════════════════════════════════════════════════╝\n");
+    return; // Exit without writing — existing data stays safe
+  }
+
   const results = {
     projects: [],
     certifications: [],
@@ -320,8 +337,27 @@ async function fetchCmsData() {
     console.log("  ⚠️ Memberships: CMS not reachable");
   }
 
-  // Write to file
+  // ═══════════════════════════════════════════════════════════════
+  // SAFETY CHECK: Don't overwrite good data with empty data
+  // ═══════════════════════════════════════════════════════════════
   const outPath = path.join(process.cwd(), "src", "data", "cms-data.json");
+  const hasNewData = results.projects.length > 0 || results.certifications.length > 0 || results.profile !== null;
+
+  if (!hasNewData && fs.existsSync(outPath)) {
+    const existingData = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    const existingHasData = existingData.projects?.length > 0 || existingData.certifications?.length > 0 || existingData.profile !== null;
+
+    if (existingHasData) {
+      console.log("\n  ╔════════════════════════════════════════════════════════╗");
+      console.log("  ║  ⛔ CMS RETURNED EMPTY DATA — KEEPING EXISTING FILE  ║");
+      console.log("  ║                                                       ║");
+      console.log("  ║  The CMS is online but returned no content.           ║");
+      console.log("  ║  Check that your entries are Published in Strapi.     ║");
+      console.log("  ╚════════════════════════════════════════════════════════╝\n");
+      return;
+    }
+  }
+
   fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
   console.log(`\n✨ CMS data snapshot & local assets saved!`);
 }
