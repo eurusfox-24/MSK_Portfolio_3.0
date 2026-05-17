@@ -63,7 +63,7 @@ export default function Hero() {
     {
       name: "Download CV",
       icon: <Download className="w-5 h-5" />,
-      href: profile.cvUrl,
+      href: `${import.meta.env.BASE_URL}cv/Min_Set_Ko_CV.pdf`,
       color: "hover:text-cyber-green hover:border-cyber-green/40",
       download: true,
     },

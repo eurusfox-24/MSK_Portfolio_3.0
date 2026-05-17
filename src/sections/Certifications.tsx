@@ -46,8 +46,6 @@ function getInitialCerts(): Certification[] {
 }
 
 function getCertImage(cert: Certification) {
-  if (cert.image) return cert.image;
-  
   const name = cert.name.toLowerCase();
   if (name.includes('fortinet')) return 'certs/Fortinet_NSE3.jpeg';
   if (name.includes('aws')) return 'certs/aws_cert.jpeg';
@@ -55,6 +53,7 @@ function getCertImage(cert: Certification) {
   if (name.includes('junction')) return 'certs/junctionHackathonCertificate.jpeg';
   if (name.includes('google')) return 'certs/googleprompting.jpeg';
   
+  if (cert.image) return cert.image;
   return 'https://placehold.co/400x300/111/00ff41?text=Credential';
 }
 
